@@ -1,7 +1,7 @@
 <div id="task" style="height: 100%;" fxLayout="column" fxLayoutAlign="start stretch">
   <div fxFlex="70px" fxLayoutAlign="space-between center" class="header">
     <span>New To Do</span>
-    <button type="button" mat-button mat-icon-button>
+    <button type="button" mat-button mat-icon-button  (click)="onNoClick()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -86,7 +86,7 @@
       </mat-form-field>
     </div>
     <div fxLayoutAlign="space-between center">
-      <button mat-stroked-button>Cancel</button>
+      <button mat-stroked-button (click)="onNoClick()">Cancel</button>
       <button mat-flat-button style="background-color: #188fff; color: #fff;">Save</button>
     </div>
   </div>
