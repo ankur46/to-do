@@ -13,11 +13,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 @NgModule({
   declarations: [ParentComponent, TaskComponent],
   imports: [
     BrowserModule,
     MatButtonModule,
+    FormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatDialogModule,
@@ -27,7 +31,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatNativeDateModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   exports:[ParentComponent,TaskComponent]
 })

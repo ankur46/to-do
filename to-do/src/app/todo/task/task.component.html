@@ -1,6 +1,9 @@
 <div id="task" style="height: 100%;" fxLayout="column" fxLayoutAlign="start stretch">
-  <div fxFlex="70px" fxLayoutAlign="start center" class="header">
+  <div fxFlex="70px" fxLayoutAlign="space-between center" class="header">
     <span>New To Do</span>
+    <button type="button" mat-button mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
   <div fxFlex class="content" fxLayout="column" fxLayoutGap="20px" style="overflow: auto;">
     <div fxLayout="column">
@@ -33,7 +36,7 @@
     <div fxLayout="column">
       <span class="t-span">Recurrence</span>
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-select>
+        <mat-select [(ngModel)]="selectedRecValue">
           <mat-option *ngFor="let type of recurrenceArr" [value]="type">
             {{type}}
           </mat-option>
@@ -52,10 +55,28 @@
     <div fxLayout="column">
       <span class="t-span">Related Relationships</span>
       <mat-form-field appearance="outline" style="width: 100%;">
-        <input matInput>
-        <button mat-button matSuffix mat-icon-button>
-          <mat-icon>search</mat-icon>
-        </button>
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let user of user"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(user)">
+            {{user}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            #userInput
+            [formControl]="userCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+            {{user}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     <div fxLayout="column">
