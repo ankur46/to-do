@@ -1,0 +1,72 @@
+<div id="task" style="height: 100%;" fxLayout="column" fxLayoutAlign="start stretch">
+  <div fxFlex="70px" fxLayoutAlign="start center" class="header">
+    <span>New To Do</span>
+  </div>
+  <div fxFlex class="content" fxLayout="column" fxLayoutGap="20px" style="overflow: auto;">
+    <div fxLayout="column">
+      <span class="t-span">Title</span>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <input matInput>
+      </mat-form-field>
+    </div>
+    <div fxLayoutAlign="start center" fxLayoutGap="10px">
+      <div fxLayout="column">
+        <span class="t-span">Start Date</span>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <input matInput [matDatepicker]="startpicker">
+          <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+          <mat-datepicker #startpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column">
+        <span class="t-span">Due Date</span>
+        <mat-form-field appearance="outline" style="width: 94%;">
+          <input matInput [matDatepicker]="endpicker">
+          <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+          <mat-datepicker #endpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <mat-checkbox><span class="t-span">High Priority</span></mat-checkbox>
+    </div>
+    <div fxLayout="column">
+      <span class="t-span">Recurrence</span>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-select>
+          <mat-option *ngFor="let type of recurrenceArr" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-checkbox><span class="t-span">Send Reminder</span></mat-checkbox>
+    </div>
+    <div fxLayout="column">
+      <span class="t-span">Location</span>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <input matInput>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <span class="t-span">Related Relationships</span>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <input matInput>
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <span class="t-span">Notes</span>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <textarea rows="5" matInput ></textarea>
+      </mat-form-field>
+    </div>
+    <div fxLayoutAlign="space-between center">
+      <button mat-stroked-button>Cancel</button>
+      <button mat-flat-button style="background-color: #188fff; color: #fff;">Save</button>
+    </div>
+  </div>
+</div>

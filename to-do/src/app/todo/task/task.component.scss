@@ -1,0 +1,13 @@
+@import "../../../styles/global.scss";
+
+.header {
+  border-bottom: 1px solid #d6d6d6;
+  span {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+}
+.content {
+  padding: 20px 20px;
+  background-color: #f8f8f8;
+}

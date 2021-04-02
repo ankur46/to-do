@@ -1,0 +1,32 @@
+//colors
+
+$primary: #f4f5f7;
+$menuSelected: linear-gradient(180deg, #fdfdfd 0%, #e5e5e5 100%);
+$yahooColor: #6001d2;
+$hoverColor: #eff0f1;
+$buttonColor: #188fff;
+$rowColor: #f7f7f7;
+//dimensions
+$logoHeight: 45px;
+
+body {
+  height: 100vh !important;
+  width: 100vw !important;
+  font-family: Mulish !important;
+  background-color: $primary;
+}
+.mat-dialog-container {
+  padding: 0 !important;
+  margin: 0;
+  color: #575757;
+  background-color: #fff;
+}
+.mat-form-field {
+  font-size: 13px;
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+}
+.t-span {
+  font-size: 16px;
+}
