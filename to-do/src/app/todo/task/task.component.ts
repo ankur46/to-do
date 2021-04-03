@@ -117,7 +117,7 @@ export class TaskComponent implements OnInit {
     })
   }
   save() {
-    console.table(this.todoForm.value);
+    console.log(this.todoForm.value);
   }
 
 }
