@@ -1,93 +1,140 @@
 <div id="task" style="height: 100%;" fxLayout="column" fxLayoutAlign="start stretch">
   <div fxFlex="70px" fxLayoutAlign="space-between center" class="header">
     <span>New To Do</span>
-    <button type="button" mat-button mat-icon-button  (click)="onNoClick()">
+    <button type="button" mat-button mat-icon-button (click)="onNoClick()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div fxFlex class="content" fxLayout="column" fxLayoutGap="20px" style="overflow: auto;">
-    <div fxLayout="column">
-      <span class="t-span">Title</span>
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <input matInput>
-      </mat-form-field>
-    </div>
-    <div fxLayoutAlign="start center" fxLayoutGap="10px">
+
+  <div fxFlex style="overflow: auto;" *ngIf="_complete">
+    <form [formGroup]="todoForm" autocomplete="off" style="width: 100%;" class="content" fxLayout="column"
+      fxLayoutGap="20px">
       <div fxLayout="column">
-        <span class="t-span">Start Date</span>
+        <span class="t-span">Title</span>
         <mat-form-field appearance="outline" style="width: 100%;">
-          <input matInput [matDatepicker]="startpicker">
-          <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
-          <mat-datepicker #startpicker></mat-datepicker>
+          <input matInput formControlName="title">
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div fxLayout="column">
+          <span class="t-span">Start Date</span>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <input matInput [matDatepicker]="startpicker" formControlName="start_date">
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <span class="t-span">Due Date</span>
+          <mat-form-field appearance="outline" style="width: 94%;">
+            <input matInput [matDatepicker]="endpicker" formControlName="due_date">
+            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+            <mat-datepicker #endpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <mat-checkbox formControlName="high_priority"><span class="t-span">High Priority</span></mat-checkbox>
+      </div>
+      <div fxLayout="column" formGroupName="recurrence" fxLayoutGap="10px">
+        <span class="t-span">Recurrence</span>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-select formControlName="parentOption" (selectionChange)="parentSelected($event.value)">
+            <mat-option *ngFor="let type of recurrenceParentArr" [value]="type">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div fxLayout="column" fxLayoutGap="10px" *ngIf="todoForm.value.recurrence['parentOption'].name !== 'Never'">
+          <ng-container *ngIf="todoForm.value.recurrence['parentOption'].name === 'Weekly'">
+            <div gdColumns="1fr 1fr 1fr 1fr" gdGap="10px 10px">
+              <ng-container *ngFor="let week of weekArr">
+                <mat-checkbox [formControlName]="week">{{week}}</mat-checkbox>
+              </ng-container>
+            </div>
+            <div fxLayoutAlign="start center" fxLayoutGap="7px">
+              <span>Every</span>
+              <mat-form-field appearance="outline" style="width: 10%;">
+                <input matInput formControlName="weekCount">
+              </mat-form-field>
+              <span>week(s)</span>
+            </div>
+          </ng-container>
+          <div fxLayoutAlign="start center" fxLayoutGap="7px">
+            <mat-form-field appearance="outline" style="width: 20%;"
+              *ngIf="todoForm.value.recurrence['childOption'] === 'Times'">
+              <input matInput formControlName="count">
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 30%;">
+              <mat-select formControlName="childOption">
+                <mat-option *ngFor="let type of recurrenceChildArr" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 40%;"
+              *ngIf="todoForm.value.recurrence['childOption'] === 'Until'">
+              <input matInput [matDatepicker]="untilpicker" formControlName="count">
+              <mat-datepicker-toggle matSuffix [for]="untilpicker"></mat-datepicker-toggle>
+              <mat-datepicker #untilpicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="reminder" fxLayout="column" fxLayoutGap="5px">
+        <mat-checkbox formControlName="check"><span class="t-span">Send Reminder</span></mat-checkbox>
+        <div fxLayoutAlign="start center" fxLayoutGap="7px" *ngIf="todoForm.value.reminder['check']">
+          <mat-form-field appearance="outline" style="width: 40%;">
+            <mat-select formControlName="option">
+              <mat-option *ngFor="let type of reminderOptionArr" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 10%;">
+            <input matInput formControlName="count">
+          </mat-form-field>
+          <span>days before</span>
+        </div>
+      </div>
+      <div fxLayout="column">
+        <span class="t-span">Location</span>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <input matInput formControlName="location">
         </mat-form-field>
       </div>
       <div fxLayout="column">
-        <span class="t-span">Due Date</span>
-        <mat-form-field appearance="outline" style="width: 94%;">
-          <input matInput [matDatepicker]="endpicker">
-          <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
-          <mat-datepicker #endpicker></mat-datepicker>
+        <span class="t-span">Related Relationships</span>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <input type="text" matInput [matAutocomplete]="auto" (keyup)="filterUser($event)" [(ngModel)]="inputValue"
+            [ngModelOptions]="{standalone: true}">
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="removeVal()">
+            <mat-option *ngFor="let option of filteredUsers" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-chip-list #chipList aria-label="Fruit selection" style="margin-top: 5px;">
+          <mat-chip *ngFor="let user of todoForm.value.relationship_users" (removed)="remove(user)">
+            {{user}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div fxLayout="column">
+        <span class="t-span">Notes</span>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <textarea rows="5" matInput formControlName="note"></textarea>
         </mat-form-field>
       </div>
-    </div>
-    <div>
-      <mat-checkbox><span class="t-span">High Priority</span></mat-checkbox>
-    </div>
-    <div fxLayout="column">
-      <span class="t-span">Recurrence</span>
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-select [(ngModel)]="selectedRecValue">
-          <mat-option *ngFor="let type of recurrenceArr" [value]="type">
-            {{type}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-checkbox><span class="t-span">Send Reminder</span></mat-checkbox>
-    </div>
-    <div fxLayout="column">
-      <span class="t-span">Location</span>
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <input matInput>
-      </mat-form-field>
-    </div>
-    <div fxLayout="column">
-      <span class="t-span">Related Relationships</span>
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-chip-list #chipList>
-          <mat-chip
-            *ngFor="let user of user"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="remove(user)">
-            {{user}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input
-            #userInput
-            [formControl]="userCtrl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event)">
-        </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
-            {{user}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
-    <div fxLayout="column">
-      <span class="t-span">Notes</span>
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <textarea rows="5" matInput ></textarea>
-      </mat-form-field>
-    </div>
-    <div fxLayoutAlign="space-between center">
-      <button mat-stroked-button (click)="onNoClick()">Cancel</button>
-      <button mat-flat-button style="background-color: #188fff; color: #fff;">Save</button>
-    </div>
+      <div fxLayoutAlign="space-between center">
+        <button type="button" mat-stroked-button (click)="onNoClick()">Cancel</button>
+        <button type="button" mat-flat-button style="background-color: #188fff; color: #fff;"
+          (click)="save()">Save</button>
+      </div>
+    </form>
   </div>
 </div>

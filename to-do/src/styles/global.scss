@@ -31,5 +31,9 @@ body {
   font-size: 16px;
 }
 .mat-chip{
-  color: #198fff;
+  background-color: #198fff;
+  color: #fff;
+  mat-icon{
+    color: #fff;
+  }
 }
