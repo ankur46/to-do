@@ -107,7 +107,7 @@
         <span class="t-span">Related Relationships</span>
         <mat-form-field appearance="outline" style="width: 100%;">
           <input type="text" matInput [matAutocomplete]="auto" (keyup)="filterUser($event)" [(ngModel)]="inputValue"
-            [ngModelOptions]="{standalone: true}">
+            [ngModelOptions]="{standalone: true}" placeholder="Add Relationship">
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
