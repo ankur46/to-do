@@ -108,9 +108,7 @@
         <mat-form-field appearance="outline" style="width: 100%;">
           <input type="text" matInput [matAutocomplete]="auto" (keyup)="filterUser($event)" [(ngModel)]="inputValue"
             [ngModelOptions]="{standalone: true}" placeholder="Add Relationship">
-          <button mat-button matSuffix mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>
+          <mat-icon matSuffix style="font-size: 24px;">search</mat-icon>
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="removeVal()">
             <mat-option *ngFor="let option of filteredUsers" [value]="option">
               {{option}}
@@ -120,7 +118,7 @@
         <mat-chip-list #chipList aria-label="Fruit selection" style="margin-top: 5px;">
           <mat-chip *ngFor="let user of todoForm.value.relationship_users" (removed)="remove(user)">
             {{user}}
-            <mat-icon matChipRemove>cancel</mat-icon>
+            <mat-icon matChipRemove>close</mat-icon>
           </mat-chip>
         </mat-chip-list>
       </div>

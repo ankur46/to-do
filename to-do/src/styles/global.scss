@@ -30,10 +30,15 @@ body {
 .t-span {
   font-size: 16px;
 }
-.mat-chip{
-  background-color: #198fff;
-  color: #fff;
-  mat-icon{
-    color: #fff;
+.mat-chip {
+  border-radius: 5px;
+  background: #e8e8e8;
+  color: #246e9c;
+  font-weight: 700;
+  font-family: "Roboto" !important;
+  border: 1px solid #dddddd;
+  height: 37px;
+  mat-icon {
+    color: #0e0e0e;
   }
 }
